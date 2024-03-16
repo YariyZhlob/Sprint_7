@@ -1,5 +1,5 @@
 import pytest
-from conftest import *
+from helpers import *
 import requests
 import json
 from constants import Constants
@@ -11,7 +11,7 @@ class TestLoginCourier:
     @allure.title('Courier can login')
     def test_courier_can_login(self):
         data = create_payload()
-        courier = requests.post(url=Constants.COURIER_REGISTRATION, data=data)
+        requests.post(url=Constants.COURIER_REGISTRATION, data=data)
         response = requests.post(url=Constants.COURIER_LOGIN, data=data)
         assert response.status_code == 200
         assert "id" in response.text
@@ -21,7 +21,7 @@ class TestLoginCourier:
     def test_courier_auth_without_login(self):
         data = {
             "password": password_creation(),
-            "first_name": first_name_creation(),
+            "firstName": first_name_creation(),
             "login": login_creation
         }
         courier = requests.post(url=Constants.COURIER_REGISTRATION, data=data)

@@ -1,5 +1,5 @@
 import pytest
-from conftest import *
+from helpers import *
 import requests
 import json
 from constants import Constants
@@ -30,6 +30,7 @@ class TestCreationCourier:
                                              ))
 
         assert response_courier_two.status_code == 409
+        assert "Этот логин уже используется. Попробуйте другой." in response_courier_two.text
 
     @allure.title('to create a courier it is necessary to transmit all necessary fields')
     def test_creation_courier_without_login(self):
@@ -37,4 +38,5 @@ class TestCreationCourier:
                                  data={"password": password_creation(),
                                        "first_name": first_name_creation()})
         assert response.status_code == 400
+        assert "Недостаточно данных для создания учетной записи" in response.text
 
