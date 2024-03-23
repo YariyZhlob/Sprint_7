@@ -14,7 +14,7 @@ class TestLoginCourier:
         requests.post(url=Constants.COURIER_REGISTRATION, data=data)
         response = requests.post(url=Constants.COURIER_LOGIN, data=data)
         assert response.status_code == 200
-        assert "id" in response.text
+        assert "id" in response.json()
 
 
     @allure.title('Courier can login')
@@ -24,10 +24,10 @@ class TestLoginCourier:
             "firstName": first_name_creation(),
             "login": login_creation
         }
-        courier = requests.post(url=Constants.COURIER_REGISTRATION, data=data)
+        requests.post(url=Constants.COURIER_REGISTRATION, data=data)
         response = requests.post(url=Constants.COURIER_LOGIN, data={"password": data.get("password")})
-        assert "Недостаточно данных для входа" in response.text
         assert response.status_code == 400
+        assert response.json()['message'] == "Недостаточно данных для входа"
 
     @allure.title('Courier cannot login without password')
     def test_courier_cannot_login_without_password(self):
@@ -36,7 +36,7 @@ class TestLoginCourier:
             "first_name": first_name_creation(),
             "login": login_creation
         }
-        courier = requests.post(url=Constants.COURIER_REGISTRATION, data=data)
+        requests.post(url=Constants.COURIER_REGISTRATION, data=data)
         response = requests.post(url=Constants.COURIER_LOGIN, data={"login": data.get("login"),
                                                                     "password": ""})
         assert response.status_code == 400

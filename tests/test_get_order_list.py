@@ -12,3 +12,4 @@ class TestOrderList:
     def test_return_order_list(self):
         response = requests.get(url=Constants.RETURN_ORDER_LIST).json()
         assert "orders" in response
+        print(response)

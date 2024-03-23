@@ -33,8 +33,7 @@ def first_name_creation():
 @allure.step("Create payload")
 def create_payload():
     payload = {"login": login_creation,
-               "password": password_creation,
-               "first_name": first_name_creation}
+               "password": password_creation}
     return payload
 
 
